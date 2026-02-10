@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, cubicBezier } from "framer-motion";
 
 type HoverImageSliderProps = {
   images?: string[];
@@ -60,7 +60,7 @@ export default function HoverImageSlider({
           initial={{ opacity: 0, x: 16 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -16 }}
-          transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.32, ease: cubicBezier(0.16, 1, 0.3, 1) }}
           draggable={false}
           loading="lazy"
         />

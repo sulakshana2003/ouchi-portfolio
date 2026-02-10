@@ -1,5 +1,5 @@
 // Projects.jsx
-import { motion } from "framer-motion";
+import { motion, cubicBezier } from "framer-motion";
 import HoverImageSlider from "../../components/HoverImageSlider";
 
 import {
@@ -33,7 +33,7 @@ const card = {
 const imageWrap = {
   hover: {
     scale: 1.06,
-    transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.45, ease: cubicBezier(0.16, 1, 0.3, 1) },
   },
 };
 
@@ -41,7 +41,7 @@ const shine = {
   hover: {
     x: "140%",
     opacity: 1,
-    transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.75, ease: cubicBezier(0.16, 1, 0.3, 1) },
   },
 };
 
