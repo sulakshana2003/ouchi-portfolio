@@ -3,7 +3,7 @@ import cloudnovaImg from "../assets/cloudnovaH.png";
 import cloudnovaImg2 from "../assets/cblog.png";
 import cloudnovaImg3 from "../assets/cproj.png";
 import ralahamiImg from "../assets/RalaHamiF.png";
-import YummyImg from "../assets/yummyH.png"; 
+import YummyImg from "../assets/yummyH.png";
 
 export type Project = {
   title: string;

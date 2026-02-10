@@ -1,16 +1,24 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
+type HoverImageSliderProps = {
+  images?: string[];
+  alt?: string;
+  intervalMs?: number;
+  className?: string;
+};
+
 export default function HoverImageSlider({
   images = [],
   alt = "Project image",
   intervalMs = 1100,
   className = "",
-}) {
+}: HoverImageSliderProps) {
   const list = useMemo(() => images.filter(Boolean), [images]);
   const [idx, setIdx] = useState(0);
   const [hovered, setHovered] = useState(false);
-  const timerRef = useRef(null);
+
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const hasMany = list.length > 1;
 
@@ -21,14 +29,18 @@ export default function HoverImageSlider({
       setIdx((p) => (p + 1) % list.length);
     }, intervalMs);
 
-    return () => clearInterval(timerRef.current);
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+      timerRef.current = null;
+    };
   }, [hovered, hasMany, intervalMs, list.length]);
 
   const onEnter = () => setHovered(true);
   const onLeave = () => {
     setHovered(false);
-    clearInterval(timerRef.current);
-    setIdx(0); // reset to first on leave (remove if you want it to continue)
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = null;
+    setIdx(0);
   };
 
   if (!list.length) return null;
@@ -48,13 +60,12 @@ export default function HoverImageSlider({
           initial={{ opacity: 0, x: 16 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -16 }}
-          transition={{ duration: 0.32, ease: "easeOut" }}
+          transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
           draggable={false}
           loading="lazy"
         />
       </AnimatePresence>
 
-      {/* dots (only show when multiple images) */}
       {hasMany && (
         <div
           className={`pointer-events-none absolute inset-x-0 bottom-3 flex justify-center transition-opacity duration-300 ${
