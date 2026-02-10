@@ -26,7 +26,7 @@ const card = {
   hover: {
     y: -10,
     scale: 1.01,
-    transition: { type: "spring", stiffness: 240, damping: 18 },
+    transition: { type: "spring" as const, stiffness: 240, damping: 18 },
   },
 };
 
